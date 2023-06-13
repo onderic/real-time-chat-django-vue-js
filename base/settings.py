@@ -26,8 +26,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'channels',
     'chat',
 ]
+
+ASGI_APPLICATION = 'base.asgi.application'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -57,7 +60,12 @@ TEMPLATES = [
     },
 ]
 
+
+
+
 WSGI_APPLICATION = 'base.wsgi.application'
+
+
 
 
 # Database
@@ -111,3 +119,16 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer',
+    },
+}
+
+LOGIN_REDIRECT_URL = 'chat-page'
+
+LOGOUT_REDIRECT_URL = 'login-user'
+
+
