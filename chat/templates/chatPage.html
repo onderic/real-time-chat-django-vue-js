@@ -1,42 +1,52 @@
 <!DOCTYPE html>
 <html>
 <body>
-	<center><h1>Hello , Welcome to my chat site ! {{request.user}}</h1></center>
+	<center><h1>Hello, Welcome to my chat site! {{request.user}}</h1></center>
 	<br>
 	{% if request.user.is_authenticated %}
-	<center> Logout the chat Page <a href = "{% url 'logout-user' %}">Logout</a></center>
+	<center> Logout the chat Page <a href="{% url 'logout-user' %}">Logout</a></center>
 	{% endif %}
-	<div
-	class="chat__item__container"
-	id="id_chat_item_container"
-	style="font-size: 20px"
-	>
-	<br />
-	<input type="text" id="id_message_send_input" />
-	<button type="submit" id="id_message_send_button">Send Message</button>
-	<br />
-	<br />
+	<div class="chat__item__container" id="id_chat_item_container" style="font-size: 20px">
+		<br />
+		<select id="id_recipient_select">
+            <option value="">Select a recipient</option>
+            {% for user in users %}
+            <option value="{{ user.username }}">{{ user.username }}</option>
+            {% endfor %}
+        </select>
+        
+		<br />
+		<input type="text" id="id_message_send_input" />
+		<button type="submit" id="id_message_send_button">Send Message</button>
+		<br />
+		<br />
 	</div>
 	<script>
 	const chatSocket = new WebSocket("ws://" + window.location.host + "/");
 	chatSocket.onopen = function (e) {
-		console.log("The connection was setup successfully !");
+		console.log("The connection was set up successfully!");
 	};
 	chatSocket.onclose = function (e) {
-		console.log("Something unexpected happened !");
+		console.log("Something unexpected happened!");
 	};
 	document.querySelector("#id_message_send_input").focus();
 	document.querySelector("#id_message_send_input").onkeyup = function (e) {
-		if (e.keyCode == 13) {
-		document.querySelector("#id_message_send_button").click();
+		if (e.keyCode === 13) {
+			document.querySelector("#id_message_send_button").click();
 		}
 	};
 	document.querySelector("#id_message_send_button").onclick = function (e) {
-		var messageInput = document.querySelector(
-		"#id_message_send_input"
-		).value;
-		chatSocket.send(JSON.stringify({ message: messageInput, username : "{{request.user.username}}"}));
-	};
+    var messageInput = document.querySelector("#id_message_send_input").value;
+    var recipientSelect = document.querySelector("#id_recipient_select");
+    var recipientUsername = recipientSelect.options[recipientSelect.selectedIndex].value;
+    
+    chatSocket.send(JSON.stringify({
+        message: messageInput,
+        username: "{{ request.user.username }}",
+        recipient: recipientUsername,
+        }));
+    };
+
 	chatSocket.onmessage = function (e) {
 		const data = JSON.parse(e.data);
 		var div = document.createElement("div");
