@@ -8,12 +8,12 @@ from django.contrib.auth.password_validation import validate_password
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'name', 'email','phone_number','date_joined','user_avatar')
+        fields = ('id', 'username', 'email','phone_number','date_joined','user_avatar')
 
 class PublicUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'name', 'email','phone_number','user_avatar')
+        fields = ('id', 'username', 'email','phone_number','user_avatar')
         
 
 class ChangePasswordSerializer(serializers.ModelSerializer):

@@ -9,7 +9,7 @@ export const useUserStore = defineStore({
       // Initial state of the user object
       isAuthenticated: false,
       id: null,
-      name: null,
+      username: null,
       email: null,
       phone_number: null,
       user_avatar: null,
@@ -30,7 +30,7 @@ export const useUserStore = defineStore({
         this.user.access = localStorage.getItem('user.access');
         this.user.refresh = localStorage.getItem('user.refresh');
         this.user.id = localStorage.getItem('user.id');
-        this.user.name = localStorage.getItem('user.name');
+        this.user.username = localStorage.getItem('user.username');
         this.user.email = localStorage.getItem('user.email');
         this.user.user_avatar = localStorage.getItem('user.user_avatar');
         this.user.phone_number = localStorage.getItem('user.phone_number');
@@ -65,7 +65,7 @@ export const useUserStore = defineStore({
       this.user.access = null;
       this.user.isAuthenticated = false;
       this.user.id = null;
-      this.user.name = null;
+      this.user.username = null;
       this.user.email = null;
       this.user.user_avatar = null;
       this.user.phone_number = null;
@@ -73,7 +73,7 @@ export const useUserStore = defineStore({
       localStorage.setItem('user.access', '');
       localStorage.setItem('user.refresh', '');
       localStorage.setItem('user.id', '');
-      localStorage.setItem('user.name', '');
+      localStorage.setItem('user.username', '');
       localStorage.setItem('user.email', '');
       localStorage.setItem('user.user_avatar', '');
       localStorage.setItem('user.phone_number', '');
@@ -84,7 +84,7 @@ export const useUserStore = defineStore({
       console.log('setUserInfo', user);
 
       this.user.id = user.id;
-      this.user.name = user.name;
+      this.user.username = user.username;
       this.user.email = user.email;
 
       // Fetch additional user data from the backend and update the user object
@@ -104,7 +104,7 @@ export const useUserStore = defineStore({
 
       // Update user information in localStorage
       localStorage.setItem('user.id', this.user.id);
-      localStorage.setItem('user.name', this.user.name);
+      localStorage.setItem('user.username', this.user.username);
       localStorage.setItem('user.email', this.user.email);
       localStorage.setItem('user.phone_number', this.user.phone_number);
 

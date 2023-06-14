@@ -14,7 +14,7 @@ from django.shortcuts import get_object_or_404
 def me(request):
     return JsonResponse({
         'id': request.user.id,
-        'name': request.user.name,
+        'username': request.user.username,
         'email': request.user.email,
     })
 
@@ -28,15 +28,15 @@ def signup(request):
 
     form = SignupForm({
         'email': data.get('email'),
-        'name': data.get('name'),
+        'username': data.get('username'),
         'password1': data.get('password1'),
         'password2': data.get('password2'),
     })
 
     if form.is_valid():
         # Check if the username is unique
-        name = form.cleaned_data['name']
-        if User.objects.filter(name=name).exists():
+        username = form.cleaned_data['username']
+        if User.objects.filter(username=username).exists():
             return Response({'message': 'error', 'error': 'Username is already taken'}, status=status.HTTP_400_BAD_REQUEST)
 
         # Check if the email is unique
