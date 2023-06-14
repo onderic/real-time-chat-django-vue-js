@@ -1,4 +1,5 @@
 from pathlib import Path
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -15,6 +16,29 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=30),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=180),
+    'ROTATE_REFRESH_TOKENS' : False,
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES':(
+        'rest_framework.permissions.IsAuthenticated',
+    )
+}
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+]
+
+CORS_TRUSTED_ORIGINS = [
+    "http://localhost:5173",
+]
+
+
 
 # Application definition
 
@@ -28,6 +52,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'channels',
     'chat',
+    'accounts',
 ]
 
 ASGI_APPLICATION = 'base.asgi.application'
@@ -35,6 +60,7 @@ ASGI_APPLICATION = 'base.asgi.application'
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -127,8 +153,6 @@ CHANNEL_LAYERS = {
     },
 }
 
-LOGIN_REDIRECT_URL = 'chat-page'
-
-LOGOUT_REDIRECT_URL = 'login-user'
+AUTH_USER_MODEL = 'accounts.User'
 
 
