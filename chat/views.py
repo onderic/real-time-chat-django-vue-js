@@ -1,5 +1,5 @@
 # from django.shortcuts import render, redirect
-# from django.contrib.auth.models import User
+# from accounts.models import User
 
 # def chatPage(request, *args, **kwargs):
 # 	if not request.user.is_authenticated:

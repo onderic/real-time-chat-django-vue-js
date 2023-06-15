@@ -3,7 +3,7 @@ from rest_framework.permissions import AllowAny,IsAuthenticated
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from .models import User
 from .forms import SignupForm
-from .serializer import UserSerializer,ChangePasswordSerializer
+from .serializer import UserSerializer,ChangePasswordSerializer,PublicUserSerializer
 from rest_framework.response import Response
 from rest_framework import status
 from django.shortcuts import get_object_or_404
@@ -55,28 +55,15 @@ def signup(request):
 
 @api_view(['GET', 'PATCH'])
 @permission_classes([IsAuthenticated])
-def get_user_data(request, pk):
-    try:
-        user = User.objects.get(pk=pk)
+def user_data(request):
+    users = User.objects.exclude(username=request.user.username)
+    serializer = PublicUserSerializer(users, many=True)
+    data = {
+        'users': serializer.data  # Wrap the serialized data in a 'users' key
+    }
+    return Response(data)
 
-        if request.method == 'GET':
-            serializer = UserSerializer(user)
-            return Response(serializer.data)
-        
-        elif request.method == 'PATCH':
-            user_avatar = request.FILES.get('user_avatar')
-
-            if user_avatar:
-                user.user_avatar = user_avatar
-                user.save()
-                serializer = UserSerializer(user)
-                return Response(serializer.data)
-            else:
-                return Response({'message': 'No image file provided'}, status=status.HTTP_400_BAD_REQUEST)
-
-    except User.DoesNotExist:
-        return Response({'message': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
-
+     
 
 @api_view(['PATCH'])
 @permission_classes([IsAuthenticated])

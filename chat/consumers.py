@@ -62,5 +62,5 @@ class ChatConsumer(AsyncWebsocketConsumer):
         chat_message.save()
 
     def get_user(self, username):
-        from django.contrib.auth.models import User
+        from accounts.models import User
         return User.objects.get(username=username)

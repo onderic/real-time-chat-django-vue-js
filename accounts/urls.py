@@ -14,7 +14,7 @@ urlpatterns = [
     path('refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 
     # settings
-    path('users/<uuid:pk>/', api.get_user_data, name='user-detail'),
+    path('users/', api.user_data, name='user-detail'),
     path('user_info_update/<uuid:pk>/', api.update_user, name='update-user'),
 
     # changepassword
