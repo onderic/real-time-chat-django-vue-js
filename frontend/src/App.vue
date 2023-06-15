@@ -107,54 +107,51 @@
 </template>
 
 <script>
-import axios from 'axios'
-import { useUserStore } from '@/stores/user'
-
+import axios from 'axios';
+import { useUserStore } from '@/stores/user';
 
 export default {
   setup() {
-      const userStore = useUserStore()
-      return {
-          userStore
-      }
+    const userStore = useUserStore();
+    return {
+      userStore
+    };
   },
-
   data() {
     return {
       searchTerm: '',
       items: [],
       filteredItems: [],
       selectedUser: null,
-  
+      selectedUserImage: null
     };
   },
   methods: {
     selectUser(username) {
-    this.selectedUser = username;
-    const user = this.items.find(item => item.username === username);
-    if (user) {
-      this.selectedUserImage = user.user_user_avatar;
-    }
-    // Perform any additional logic when a user is selected
-  },
-  getUserImage(username) {
-    if (this.selectedUser === username) {
-      return this.selectedUserImage;
-    }
-    const user = this.items.find(item => item.username === username);
-    if (user) {
-      return user.user_user_avatar;
-    }
-    // Return a default image URL if the user is not found
-    return 'default-avatar.jpg';
-  },
-
+      this.selectedUser = username;
+      const user = this.items.find(item => item.username === username);
+      if (user) {
+        this.selectedUserImage = user.user_user_avatar;
+      }
+      // Perform any additional logic when a user is selected
+    },
+    getUserImage(username) {
+      if (this.selectedUser === username) {
+        return this.selectedUserImage;
+      }
+      const user = this.items.find(item => item.username === username);
+      if (user) {
+        return user.user_user_avatar;
+      }
+      // Return a default image URL if the user is not found
+      return 'default-avatar.jpg';
+    },
     logout() {
-    this.userStore.removeToken();
-    this.$router.push({ name: 'login' }); // Redirect to the login page
-   },
+      this.userStore.removeToken();
+      this.$router.push({ name: 'login' }); // Redirect to the login page
+    },
     filterItems() {
-      this.filteredItems = this.items.filter((item) => {
+      this.filteredItems = this.items.filter(item => {
         const lowercaseItem = item.username.toLowerCase();
         return lowercaseItem.includes(this.searchTerm.toLowerCase());
       });
@@ -163,7 +160,8 @@ export default {
       this.filterItems();
     },
     fetchUsers() {
-      axios.get('api/v1/chat')
+      axios
+        .get('api/v1/chat')
         .then(response => {
           console.log(response.data); // Log the response data
           const responseData = response.data.users; // Assuming users array is inside a "users" property
@@ -176,7 +174,7 @@ export default {
         .catch(error => {
           console.error('Error fetching users:', error);
         });
-    },
+    }
   },
   created() {
     this.userStore.initStore();
@@ -185,13 +183,24 @@ export default {
 
     if (token) {
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+
+      // Check if the user is authenticated
+      if (this.userStore.user.isAuthenticated) {
+        // User is authenticated, proceed to the home page
+        this.$router.push({ name: 'home' });
+      } else {
+        // User is not authenticated, redirect to the login page
+        this.$router.push({ name: 'login' });
+      }
     } else {
       axios.defaults.headers.common['Authorization'] = '';
+
+      // User is not authenticated, redirect to the login page
+      this.$router.push({ name: 'login' });
     }
 
     this.fetchUsers();
     this.initializeFilteredItems();
-  },
+  }
 };
-
 </script>

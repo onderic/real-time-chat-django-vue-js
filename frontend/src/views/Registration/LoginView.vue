@@ -90,9 +90,12 @@ export default {
           const response2 = await axios.get('api/v1/me/');
           this.userStore.setUserInfo(response2.data);
 
-          // Redirect the user to the intended page or home ('/')
-          const intendedPage = this.$route.query.to || '/';
+        // Redirect the user to the intended page or home ('/')
+         const intendedPage = this.$route.query.to || '/';
           this.$router.push(intendedPage);
+
+          // Trigger a full home page reload
+          location.reload();
         } catch (error) {
           this.errors.push('Invalid email or password');
           console.log('error', error);
