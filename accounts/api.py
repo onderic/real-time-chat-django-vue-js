@@ -53,6 +53,7 @@ def signup(request):
     return Response({'message': message})
 
 
+
 @api_view(['GET', 'PATCH'])
 @permission_classes([IsAuthenticated])
 def user_data(request):

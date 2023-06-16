@@ -42,7 +42,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         username = event["username"]
         recipient = event["recipient"]
         await self.send(text_data=json.dumps({"message": message, "username": username, "recipient": recipient}))
-        print(f"Message sent: {message} - Username: {username} - Recipient: {recipient}")
+        # print(f"Message sent: {message} - Username: {username} - Recipient: {recipient}")
 
     @sync_to_async
     def save_message(self, sender_username, recipient_username, message):

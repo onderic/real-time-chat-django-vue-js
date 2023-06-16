@@ -96,7 +96,7 @@ export const useUserStore = defineStore({
           this.user.phone_number = userData.phone_number ? userData.phone_number : null;
           localStorage.setItem('user.user_avatar', this.user.user_avatar);
           localStorage.setItem('user.phone_number', this.user.phone_number);
-          console.log('User:', this.user);
+          console.log('User data:', this.user);
         })
         .catch(error => {
           console.error('Error fetching user data:', error);
