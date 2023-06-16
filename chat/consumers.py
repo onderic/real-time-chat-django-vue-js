@@ -47,9 +47,10 @@ class ChatConsumer(AsyncWebsocketConsumer):
     @sync_to_async
     def save_message(self, sender_username, recipient_username, message):
         from .models import ChatRoom, ChatMessage
+        import random
 
         # Concatenate the sender's username and recipient's username
-        chatroom_name = f"{sender_username}_{recipient_username}"
+        chatroom_name = f"msg{random.randint(1, 10000)}"
         # Check if the chat room already exists or create a new one
         try:
             room = ChatRoom.objects.get(name=chatroom_name)
