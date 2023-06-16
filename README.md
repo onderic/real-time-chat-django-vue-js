@@ -9,7 +9,7 @@
 - [Contributing](#contributing)
 - [License](#license)
 
-Project Description
+## Project Description
     This project is a real-time chat application where users can communicate with each other in real-time.
 
 ## Features
