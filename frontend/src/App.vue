@@ -3,35 +3,32 @@
   <div class="tracking-wider  flex flex-col min-h-screen">
     <div class="relative flex min-h-screen" v-if="userStore.user.isAuthenticated">
       <!-- Sidebar content -->
-      <div class="fixed top-0 h-screen bg-gray-200 dark:text-white w-1/3 space-x-6 shadow-lg border border-gray-300 px-0 py-4 inset-y-0 left-0 md:relative md:-translate-x-0 transform -translate-x-full transition duration-200 ease-in-out overflow-y-auto">
-  <!-- Sidebar content -->
-  <div class="bg-white py-2 top-0 px-4 flex items-center justify-between">
-    <div class="flex items-center">
-      <img :src="userStore.user.user_avatar" alt="logo" class="mr-2 h-12 w-12 rounded-full border-2 border-green-400">
-    </div>
-    <div class="ml-auto">
-      <button class="bg-sky-500 hover:bg-sky-700 text-white font-bold py-1 px-2 rounded-md" @click="logout()">logout</button>
-   
-    </div>
+      <div class="fixed top-0 h-screen bg-gray-200 dark:text-white w-1/3 space-x-6 shadow-lg border border-gray-300 inset-y-0 left-0 md:relative md:-translate-x-0 transform -translate-x-full transition duration-200 ease-in-out overflow-y-auto">
+      <!-- Sidebar content -->
+      <div class="bg-white border border-b border-gray-200  py-2 mt-0 px-4 flex items-center justify-between" style="position: sticky; top: 0;">
+        <div class="flex items-center">
+          <img :src="userStore.user.user_avatar" alt="userStore.user.name" class="mr-2 h-12 w-12 rounded-full border-2 border-green-400">
+        </div>
+        
+        <div class="px-2  ml-2 rounded-md">
+        <div >
+          <input
+          type="text"
+          v-model="searchTerm"
+          @input="filterItems"
+          placeholder="Search..."
+          class="border border-gray-400 bg-white rounded-md px-4 py-2 w-full"
+        />
+        </div>
 
   </div>
- <div class="mt-3 bg-white px-2 py-2 rounded-md ">
-  <div >
-        <input
-        type="text"
-        v-model="searchTerm"
-        @input="filterItems"
-        placeholder="Search..."
-        class="border border-gray-100 rounded-md px-4 py-2 w-full"
-      />
-      </div>
-
- </div>
+  </div>
+  
   <div class="mt-5">
     <div class="mr-4">
      
       <ul v-if="filteredItems.length > 0" class="mt-4">
-        <li v-for="(item, index) in filteredItems" :key="index" class="border bg-white w-full rounded-md mr-2 border-gray-50 mb-3 px-4 py-2">
+        <li v-for="(item, index) in filteredItems" :key="index" class="border bg-white w-full shadow-md rounded-md mr-2 border-gray-50 mb-3 px-4 py-2">
           <div
             class="flex items-center space-x-1 px-4 py-2 rounded-md cursor-pointer"
             :class="{ 'bg-gray-100 w-full': selectedUser === item.username }"
@@ -54,17 +51,20 @@
       <!-- Main content -->
           <div class="h-screen w-full overflow-y-auto">
             <div  v-if="selectedUser" class="mb-18">
-              <nav  class="bg-gray-200 py-4 px-4 overflow-y-auto flex items-center justify-between fixed top-0 lg:left-1/4 lg:w-3/4 w-full border-b border-gray-300">
+              <nav  class="bg-gray-200 py-2 px-4 overflow-y-auto flex items-center justify-between fixed top-0 lg:left-1/4 lg:w-3/4 w-full border-b border-gray-300">
                 <!-- Navigation content -->
                 <div class="flex items-center">
                 <img :src="getUserImage(selectedUser)" alt="" class="h-12 w-12 rounded-full  border-r-2 border-gray-300 mr-2">
                 <span v-if="selectedUser" class=" text-xl">{{ selectedUser }}</span>
               </div>
-
+              <div class="ml-auto">
+              <button class="bg-sky-500 hover:bg-sky-700 text-white font-bold py-1 px-2 rounded-md" @click="logout()">logout</button>
+          
+             </div>
               </nav>
 
 
-            <div :class="{ 'bg-gray-50': selectedUser, 'bg-slate-800': !selectedUser }">
+            <div :class="{ 'bg-gray-500': selectedUser, 'bg-slate-800': !selectedUser }">
           
               <div v-if="chatItems.length > 0" class="px-4 mt-10 py-8 bg-white h-screen ">
             <div class="overflow-y-auto max-h-[480px]">
@@ -91,6 +91,15 @@
               </div>
             </div>
           </div>
+            </div>
+            <div v-else class="bg-gray-200 h-screen flex justify-center  items-center">
+            <div>
+              <h1 class="text-4xl font-bold mb-4 ml-4">Welcome to Gigs Chat</h1>
+                <p class="text-xl">Time to connect to friends and family you love.</p>
+              <div class="flex justify-center items-center mt-4" >
+                <img src="./assets/home.jpg" class="h-64 rounded-md " alt="">
+              </div>
+            </div>
             </div>
         <toast></toast>
       </div>
