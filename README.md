@@ -10,15 +10,14 @@
 - [License](#license)
 
 ## Project Description
-
-Provide an overview of your project, its purpose, and its main functionalities. For example, this project is a real-time chat application where users can communicate with each other in real-time.
+    This project is a real-time chat application where users can communicate with each other in real-time.
 
 ## Features
 
 - Real-time chat functionality using WebSocket communication
 - User authentication and authorization
 - Sending and receiving messages between users
-- Displaying online/offline status of users
+<!-- - Displaying online/offline status of users -->
 - Search and filter users
 
 ## Technologies Used
@@ -33,7 +32,7 @@ Provide an overview of your project, its purpose, and its main functionalities. 
 
 ## Clone the repository:
 
-   git clone <repository_url>
+   git clone https://github.com/onderic/real-time-chat-django-vue-js.git
 
 
 ## Navigate to the project directory:
@@ -46,8 +45,7 @@ Provide an overview of your project, its purpose, and its main functionalities. 
     source venv/bin/activate
 
 ## Install the Python dependencies:
-pip install -r requirements.txt
-Install the Node.js dependencies for the frontend:
+    pip install -r requirements.txt
 
 
 
