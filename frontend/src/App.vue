@@ -8,14 +8,23 @@
         <option v-for="user in users" :value="user.username" :key="user.id" class="bg-white">{{ user.username }}</option>
       </select>
 
-      <input v-model="message" type="text" id="id_message_send_input" class="mr-4">
-      <button @click="sendMessage" id="id_message_send_button" class="px-4 py-2 bg-blue-500 text-white">Send Message</button>
-
+      <input v-model="message" type="text" class="mr-4">
+      <button @click="sendMessage"  class="px-4 py-2 bg-blue-500 text-white">Send Message</button>
       <div v-if="chatItems.length > 0">
-        <div v-for="(item, index) in chatItems" :key="index" class="mt-4 bg-gray-400">
-          {{ item.sender }}: {{ item.message }}
-        </div>
-      </div>
+  <div v-for="(item, index) in chatItems" :key="index" class="mt-4">
+    <div v-if="item.sender === userStore.user.username" class="bg-gray-500 text-white p-2 rounded-md">
+      <span>{{ item.sender }} :</span>
+      <span class="ml-3"  >{{ item.message }}</span>
+    </div>
+    <div v-else class="bg-gray-300 p-1 rounded-md">
+      <span>{{ item.sender }} :</span>
+      <span class="ml-3"  >{{ item.message }}</span>
+    </div>
+  </div>
+</div>
+
+
+
       <div v-else class="mt-4">No messages yet.</div>
     </div>
   </div>
@@ -167,17 +176,16 @@ export default {
       
     },
     async fetchChatMessages(recipientUsername) {
-      try {
-        const senderUsername = this.userStore.user.username; // Get the sender's username from the userStore
-
-        const response = await axios.get(`/chat/api/v1/fetch-chat-messages/${senderUsername}/${recipientUsername}/`);
-        console.log('Response:', response);
-        this.chatItems = response.data;
-        console.log('Chat Messages:', this.chatItems);
-      } catch (error) {
-        console.error('Error fetching chat messages:', error);
-      }
-    },
+        try {
+          const senderUsername = this.userStore.user.username;
+          const response = await axios.get(`/chat/api/v1/fetch-chat-messages/${senderUsername}/${recipientUsername}/`);
+          console.log('Response:', response);
+          this.chatItems = response.data;
+          console.log('Chat Messages:', this.chatItems);
+        } catch (error) {
+          console.error('Error fetching chat messages:', error);
+        }
+    }
 
 
   },
