@@ -31,8 +31,7 @@
 ## Installation
 
 ## Clone the repository:
-
-   git clone https://github.com/onderic/real-time-chat-django-vue-js.git
+    git clone https://github.com/onderic/real-time-chat-django-vue-js.git
 
 
 ## Navigate to the project directory:
@@ -58,7 +57,7 @@
     npm run serve
 
 ## Access the application in your web browser:
-http://localhost:8000
+    http://localhost:8000
 
 
 API Documentation
