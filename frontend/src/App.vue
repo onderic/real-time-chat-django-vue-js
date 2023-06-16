@@ -64,45 +64,31 @@
               </nav>
 
 
-              <div :class="{ 'bg-gray-50': selectedUser, 'bg-slate-300': !selectedUser }" class="flex flex-col min-h-screen">
-            
-                <div v-if="chatItems.length > 0" class="px-4 mt-20 py-8">
-                  <div v-for="(item, index) in chatItems" :key="index" class="mt-4">
-                    <div v-if="item.sender === userStore.user.username" class="bg-white ml-5 rounded-md shadow-md px-4 py-4 w-1/2">
-                      <span>me :</span>
-                      <span class="ml-3">{{ item.message }}</span>
-                    </div>
-                    <div v-else class="flex  justify-end">
-                      <div class="bg-green-200 rounded-md w-1/2 shadow-md px-16 py-4">
-                        <span>{{ item.sender }} :</span>
-                        <span class="ml-3">{{ item.message }}</span>
-                      </div>
-                    </div>
+            <div :class="{ 'bg-gray-50': selectedUser, 'bg-slate-300': !selectedUser }" class="flex flex-col min-h-screen">
+            <div v-if="chatItems.length > 0" class="px-4 mt-10 py-8">
+              <div v-for="(item, index) in chatItems" :key="index" class="mt-4">
+                <div v-if="item.sender === userStore.user.username" class="bg-white ml-5 rounded-md shadow-md px-4 py-4 w-1/2">
+                  <span>me :</span>
+                  <span class="ml-3">{{ item.message }}</span>
+                </div>
+                <div v-else class="flex justify-end">
+                  <div class="bg-green-200 rounded-md w-1/2 shadow-md px-16 py-4">
+                    <!-- <span>{{ item.sender }} :</span> -->
+                    <span class="ml-3">{{ item.message }}</span>
                   </div>
-               
+                </div>
               </div>
-
-          
-            <div class="flex-grow"></div> <!-- Add this div to push the footer to the bottom -->
-
-            <div v-if="selectedUser" class="fixed bottom-0 mb-3 bg-slate-400 p-4 w-full">
-          <div  class="flex items-center rounded-md px-10">
-            <textarea  v-model="message"  type="text"  class="w-1/2 rounded-md py-1 px-4" placeholder="Type here..."></textarea>
-            <button @click="sendMessage" class="ml-3 focus:outline-none bg-white p-3 rounded-md">
-              <i class="fas fa-paper-plane text-gray-600 hover:text-gray-800"></i>
-            </button>
-          </div>
-        </div>
-          </div>
-
             </div>
-
-        <!-- <footer class="bg-white-200 w-full py-4">
-          <div class="container mx-auto text-center">
-            <p class="text-gray-600 dark:text-white">&copy; 2023 Your Company. All rights reserved.</p>
+            <div v-if="selectedUser" class="fixed bottom-0 mb-3 bg-slate-400 p-4 w-full">
+              <div class="flex items-center rounded-md px-10">
+                <textarea v-model="message" @keydown.enter="sendMessage" type="text" class="w-1/2 rounded-md py-1 px-4" placeholder="Type here..." required></textarea>
+                <button @click="sendMessage" class="ml-3 focus:outline-none bg-white p-3 rounded-md">
+                  <i class="fas fa-paper-plane text-gray-600 hover:text-gray-800"></i>
+                </button>
+              </div>
+            </div>
           </div>
-        </footer> -->
-
+            </div>
         <toast></toast>
       </div>
     </div>
@@ -144,8 +130,8 @@ export default {
       if (user) {
         this.selectedUserImage = user.user_user_avatar;
         this.recipient = user.username; // Store the recipient's name
+        this.fetchChatMessages(this.recipient); // Fetch chat messages for the selected user
       }
-      // Perform any additional logic when a user is selected
     },
 
     getUserImage(username) {
@@ -195,31 +181,33 @@ export default {
         const recipient = this.recipient;
         const message = this.message;
 
+        if (!message.trim()) {
+          return; // Don't send empty messages
+        }
+
         try {
-          // Create a WebSocket connection and send the message
           const connection = new WebSocket("ws://localhost:8000//chat/");
 
           connection.onopen = () => {
             console.log("WebSocket connection opened.");
 
-            // Construct the message payload
             const payload = JSON.stringify({
               message: message,
               username: username,
               recipient: recipient,
             });
 
-            // Send the payload through the WebSocket connection
             connection.send(payload);
           };
+
+          this.message = ''; // Clear the input field after sending the message
 
           connection.onmessage = async (event) => {
             console.log('Received message:', event);
 
-            // Handle the received message from the WebSocket
             const data = JSON.parse(event.data);
             await this.saveMessage(data.username, data.recipient, data.message);
-            this.fetchChatMessages(recipient); // Update chat messages after saving the new message
+            await this.fetchChatMessages(recipient); // Update chat messages immediately after saving the new message
           };
 
           connection.onclose = () => {
@@ -232,7 +220,8 @@ export default {
         } catch (error) {
           console.error('Error sending message:', error);
         }
-},
+      },
+
 
 
     saveMessage(senderUsername, recipientUsername, message) {
@@ -251,6 +240,9 @@ export default {
     async fetchChatMessages(recipientUsername) {
         try {
           const senderUsername = this.userStore.user.username;
+          // clear the chatitem
+          this.chatItems = [];
+
           const response = await axios.get(`/chat/api/v1/fetch-chat-messages/${senderUsername}/${recipientUsername}/`);
           console.log('Response:', response);
           this.chatItems = response.data;
