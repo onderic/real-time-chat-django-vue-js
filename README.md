@@ -10,7 +10,7 @@
 - [License](#license)
 
 ## Project Description
-    This project is a real-time chat application where users can communicate with each other in real-time.
+    This project is a real-time chat application where users can communicate with each other in real-time
 
 ## Features
 
