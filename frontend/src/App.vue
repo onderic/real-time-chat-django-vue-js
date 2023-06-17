@@ -5,7 +5,7 @@
       <!-- Sidebar content -->
       <div class="fixed top-0 h-screen bg-gray-200 dark:text-white w-1/3 space-x-6 shadow-lg border border-gray-300 inset-y-0 left-0 md:relative md:-translate-x-0 transform -translate-x-full transition duration-200 ease-in-out overflow-y-auto">
       <!-- Sidebar content -->
-      <div class="bg-white border border-b border-gray-200  py-2 mt-0 px-4 flex items-center justify-between" style="position: sticky; top: 0;">
+      <div class="bg-gray-300 shadow-md  py-2 mt-0 px-4 flex items-center justify-between" style="position: sticky; top: 0;">
         <div class="flex items-center">
           <img :src="userStore.user.user_avatar" alt="" class="mr-2 h-12 w-12 rounded-full border-2 border-green-400">
           <span class="text-xl"></span>
@@ -18,7 +18,7 @@
           v-model="searchTerm"
           @input="filterItems"
           placeholder="Search..."
-          class="border border-gray-400 bg-white rounded-md px-4 py-2 w-full"
+          class="border border-gray-300 bg-white rounded-md px-4 py-2 w-full"
         />
         </div>
 
@@ -70,12 +70,12 @@
               <div v-if="chatItems.length > 0" class="px-4 mt-10 py-8 bg-white h-screen ">
             <div class="overflow-y-auto max-h-[480px]">
               <div v-for="(item, index) in chatItems" :key="index" class="mt-4">
-                <div v-if="item.sender === userStore.user.username" class="bg-gray-100 ml-2  border border-gray-200 rounded-md shadow-md px-4 py-4 w-1/2">
-                  <span>me :</span>
+                <div v-if="item.sender === userStore.user.username" class="bg-gray-100 ml-2  border border-gray-200 rounded-md shadow-md px-4 py-2 w-1/2">
+                  <span>Me :</span>
                   <span class="ml-3">{{ item.message }}</span>
                 </div>
                 <div v-else class="flex justify-end">
-                  <div class="bg-green-300 rounded-md w-1/2 shadow-md px-16 py-4">
+                  <div class="bg-green-300 rounded-md w-1/2 shadow-md px-16 py-2 mb-4 mr-4">
                     <!-- <span>{{ item.sender }} :</span> -->
                     <span class="ml-3">{{ item.message }}</span>
                   </div>
@@ -85,15 +85,15 @@
             </div>
             <div v-if="selectedUser" class="fixed bottom-0 mb-3 bg-gray-200 p-4 w-full">
               <div class="flex items-center rounded-md px-10">
-                <textarea v-model="message" @keydown.enter="sendMessage" type="text" class="w-1/2 rounded-md py-1  px-4" placeholder="Type here..." required></textarea>
+                <input v-model="message" @keydown.enter="sendMessage" type="text" class="w-1/2 rounded-md py-3  px-4" placeholder="Type here..." required>
                 <button @click="sendMessage" class="ml-3 focus:outline-none bg-white p-3 rounded-md">
-                  <i class="fas fa-paper-plane text-gray-600 hover:text-white"></i>
+                  <i class="fas fa-paper-plane text-gray-600 hover:text-gray-700"></i>
                 </button>
               </div>
             </div>
           </div>
             </div>
-            <div v-else class="bg-gray-200 h-screen flex justify-center  items-center">
+            <div v-else class="bg-gray-700 h-screen flex justify-center  items-center">
             <div class="bg-white px-8 py-8 rounded-lg" >
               <h1 class="text-4xl font-bold mb-4 ml-4">Welcome to Gigs Chat</h1>
                 <p class="text-xl">Time to connect to friends and family you love.</p>
