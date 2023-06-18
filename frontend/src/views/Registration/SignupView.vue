@@ -13,19 +13,19 @@
                   </div>
           <form  @submit.prevent="submitForm" class="max-w-md mx-auto p-4 shadow-md rounded-lg">
             <div class="mb-4">
-              <label for="name" class="block text-gray-700  dark:text-white font-bold mb-2">Username:</label>
+              <label for="name" class="block text-white  dark:text-white font-bold mb-2">Username:</label>
               <input v-model="form.username" type="username" id="username" class="w-full px-3 dark:bg-slate-700 dark:text-white py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500" placeholder="Enter your username">
             </div>
             <div class="mb-4">
-              <label for="email" class="block text-gray-700  dark:text-white font-bold mb-2">Email:</label>
+              <label for="email" class="block text-white  dark:text-white font-bold mb-2">Email:</label>
               <input v-model="form.email" type="email" id="email" class="w-full px-3 dark:bg-slate-700 dark:text-white py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500" placeholder="Enter your email">
             </div>
             <div class="mb-4">
-              <label for="password" class="block text-gray-700  dark:text-white font-bold mb-2">Password:</label>
+              <label for="password" class="block text-white  dark:text-white font-bold mb-2">Password:</label>
               <input v-model="form.password1" type="password" class="w-full px-3 dark:bg-slate-700 dark:text-white py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500" placeholder="Enter password">
             </div>
             <div class="mb-4">
-              <label for="password" class="block text-gray-700  dark:text-white font-bold mb-2">Repeat Password:</label>
+              <label for="password" class="block text-white  dark:text-white font-bold mb-2">Repeat Password:</label>
               <input v-model="form.password2" type="password" class="w-full px-3 dark:bg-slate-700 dark:text-white py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500" placeholder="Repeat password">
             </div>
             <template v-if="errors.length > 0">
