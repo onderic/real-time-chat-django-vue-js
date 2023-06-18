@@ -22,6 +22,7 @@ def fetch_chat_messages(request, sender_username, recipient_username):
             'timestamp': message.timestamp
         }
         serialized_messages.append(serialized_message)
+        # print(serialized_messages)
 
     return Response(serialized_messages)
 

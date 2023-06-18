@@ -1,6 +1,6 @@
 <template>
-    <div v-if="!userStore.user.isAuthenticated"  id="app" class="container bg-white dark:bg-slate-800 mt-8 pb-8 px-4 mb-8 rounded-lg mx-auto">
-        <div class="mb-4">
+    <div v-if="!userStore.user.isAuthenticated"  id="app"  class="dark:bg-slate-800 mt-8 rounded-lg mx-auto">
+      <div class="mb-4 px-16 text-white  bg-gray-800 ">
           <!--Logo-->
         <div class="text-center">
                     <img

@@ -1,6 +1,6 @@
 <template>
-  <div id="app" class="container bg-white dark:bg-slate-800 mt-8 pb-8 px-4 mb-8 rounded-lg mx-auto">
-      <div class="mb-4">
+  <div id="app" class="dark:bg-slate-800 mt-8 rounded-lg mx-auto">
+      <div class="mb-4 px-16 text-white  bg-gray-800 ">
         <!--Logo-->
       <div class="text-center">
                   <img
@@ -13,11 +13,11 @@
                 </div>
         <form v-on:submit.prevent="submitForm" class="max-w-md mx-auto p-4 shadow-md dark:shadow-xl rounded-lg">
           <div class="mb-4">
-            <label for="email" class="block text-gray-700 dark:text-white font-bold mb-2">Email:</label>
+            <label for="email" class="block text-white dark:text-white font-bold mb-2">Email:</label>
             <input v-model="form.email" type="email" id="email" class="w-full px-3 py-2  dark:bg-slate-700 dark:text-white border border-gray-300 rounded-md focus:outline-none focus:border-blue-500" placeholder="Enter your email">
           </div>
           <div class="mb-4">
-            <label for="password" class="block text-gray-700 dark:text-white font-bold mb-2">Password:</label>
+            <label for="password" class="block text-white dark:text-white font-bold mb-2">Password:</label>
             <input v-model="form.password" type="password" id="password" class="w-full px-3 py-2  dark:bg-slate-700 dark:text-white border border-gray-300 rounded-md focus:outline-none focus:border-blue-500" placeholder="Enter your name">
           </div>
 

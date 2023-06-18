@@ -1,6 +1,6 @@
 
 <template>
-  <div class="tracking-wider  flex flex-col min-h-screen">
+  <div class="tracking-wider  bg-gray-700  flex flex-col min-h-screen">
     <div class="relative flex min-h-screen"  v-if="userStore.user.isAuthenticated">
     
       <div class="fixed top-0 h-screen bg-gray-700 dark:text-white w-1/3 space-x-6 shadow-lg border border-gray-300 inset-y-0 left-0 md:relative md:-translate-x-0 transform -translate-x-full transition duration-200 ease-in-out overflow-y-auto">
