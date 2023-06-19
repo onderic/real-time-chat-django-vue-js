@@ -2,11 +2,10 @@ import { defineStore } from 'pinia';
 import axios from 'axios';
 
 export const useUserStore = defineStore({
-  id: 'user', // Unique identifier for the store instance
+  id: 'user',
 
   state: () => ({
     user: {
-      // Initial state of the user object
       isAuthenticated: false,
       id: null,
       username: null,
@@ -20,13 +19,11 @@ export const useUserStore = defineStore({
 
   actions: {
     initStore() {
-      // Action to initialize the store's state from localStorage
       console.log('initStore', localStorage.getItem('user.access'));
 
       if (localStorage.getItem('user.access')) {
         console.log('User has access!');
 
-        // Retrieve user data from localStorage and update the state
         this.user.access = localStorage.getItem('user.access');
         this.user.refresh = localStorage.getItem('user.refresh');
         this.user.id = localStorage.getItem('user.id');
@@ -36,7 +33,6 @@ export const useUserStore = defineStore({
         this.user.phone_number = localStorage.getItem('user.phone_number');
         this.user.isAuthenticated = true;
 
-        // Call refreshToken action to update the access token
         this.refreshToken();
 
         console.log('Initialized user:', this.user);
@@ -44,7 +40,6 @@ export const useUserStore = defineStore({
     },
 
     setToken(data) {
-      // Action to set the access and refresh tokens in the store's state and localStorage
       console.log('setToken', data);
 
       this.user.access = data.access;
@@ -58,7 +53,6 @@ export const useUserStore = defineStore({
     },
 
     removeToken() {
-      // Action to remove tokens and user data from the store's state and localStorage
       console.log('removeToken');
 
       this.user.refresh = null;
@@ -80,39 +74,37 @@ export const useUserStore = defineStore({
     },
 
     setUserInfo(user) {
-      // Action to set user information in the store's state and localStorage
       console.log('setUserInfo', user);
-
+    
       this.user.id = user.id;
       this.user.username = user.username;
       this.user.email = user.email;
-
-      // Fetch additional user data from the backend and update the user object
+    
+      // Fetch user avatar and phone number from backend and update the user object
       axios
-        .get(`/api/v1/users/${this.user.id}/`)
+        .get(`/api/v1/user/${this.user.id}/`)
         .then(response => {
           const userData = response.data;
           this.user.user_avatar = `http://127.0.0.1:8000${userData.user_avatar}`;
           this.user.phone_number = userData.phone_number ? userData.phone_number : null;
           localStorage.setItem('user.user_avatar', this.user.user_avatar);
           localStorage.setItem('user.phone_number', this.user.phone_number);
-          console.log('User data:', this.user);
+          console.log('User:', this.user);
         })
         .catch(error => {
           console.error('Error fetching user data:', error);
         });
-
-      // Update user information in localStorage
+    
       localStorage.setItem('user.id', this.user.id);
       localStorage.setItem('user.username', this.user.username);
       localStorage.setItem('user.email', this.user.email);
       localStorage.setItem('user.phone_number', this.user.phone_number);
-
+    
       console.log('User:', this.user);
     },
+    
 
     refreshToken() {
-      // Action to refresh the access token
       axios
         .post('/api/v1/refresh/', {
           refresh: this.user.refresh,
@@ -127,7 +119,6 @@ export const useUserStore = defineStore({
         .catch(error => {
           console.log(error);
 
-          // If token refresh fails, remove tokens and user data
           this.removeToken();
         });
     },

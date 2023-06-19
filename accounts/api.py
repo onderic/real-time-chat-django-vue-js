@@ -54,13 +54,26 @@ def signup(request):
 
 
 
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def user_info(request, pk):
+    try:
+        user = User.objects.get(pk=pk)
+    except User.DoesNotExist:
+        return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    serializer = UserSerializer(user)
+    print(serializer)
+    return Response(serializer.data)
+
+
 @api_view(['GET', 'PATCH'])
 @permission_classes([IsAuthenticated])
 def user_data(request):
     users = User.objects.exclude(username=request.user.username)
     serializer = PublicUserSerializer(users, many=True)
     data = {
-        'users': serializer.data  # Wrap the serialized data in a 'users' key
+        'users': serializer.data 
     }
     return Response(data)
 

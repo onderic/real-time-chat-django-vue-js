@@ -15,6 +15,7 @@ urlpatterns = [
 
     # settings
     path('users/', api.user_data, name='user-detail'),
+    path('user/<uuid:pk>/', api.user_info, name='user-info'),
     path('user_info_update/<uuid:pk>/', api.update_user, name='update-user'),
 
     # changepassword

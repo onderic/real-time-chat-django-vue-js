@@ -5,15 +5,18 @@
     
       <div class="fixed top-0 h-screen bg-gray-700 dark:text-white w-1/3 space-x-6 shadow-lg border border-gray-300 inset-y-0 left-0 md:relative md:-translate-x-0 transform -translate-x-full transition duration-200 ease-in-out overflow-y-auto">
       <!-- Sidebar content -->
-      <div  class="bg-gray-800 shadow-md  py-2 mt-0 px-4 flex items-center justify-between" style="position: sticky; top: 0;">
+      <div   class="bg-gray-800 shadow-md  py-2 mt-0 px-4 flex items-center justify-between" style="position: sticky; top: 0;">
         <div class="flex items-center">
           <div class="hs-dropdown relative inline-flex">
             <img id="hs-dropdown-default" :src="userStore.user.user_avatar" 
-          @error="handleImageError"
+        
           alt="" 
           class="mr-2 h-12 w-12 rounded-full border-2 border-green-400">
 
-          <div class="hs-dropdown-menu transition-[opacity,margin] duration-[0.1ms] hs-dropdown-open:opacity-100 opacity-0 w-72 hidden z-10 mt-2 min-w-[15rem] bg-gray-800 shadow-md rounded-lg p-2 dark:bg-gray-800 dark:border dark:border-gray-700 dark:divide-gray-700" aria-labelledby="hs-dropdown-default">
+          <div class="hs-dropdown-menu transition-[opacity,margin] duration-[0.1ms] hs-dropdown-open:opacity-100 opacity-0 w-72 hidden z-10 mt-2 min-w-[15rem] bg-gray-900 shadow-md rounded-lg p-2 dark:bg-gray-800 dark:border dark:border-gray-700 dark:divide-gray-700" aria-labelledby="hs-dropdown-default">
+            <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-white  dark:text-gray-400">
+              Welcome,<b>{{ userStore.user.username }}</b>
+            </a>
             <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-white hover:bg-white hover:text-gray-600 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300" href="#">
               Profile
             </a>
@@ -22,8 +25,7 @@
             </a>
           </div>
         </div>
-         
-          
+        
         </div>
         
         <div class="px-2  ml-2 rounded-md">
@@ -60,8 +62,8 @@
           </div>
         </li>
       </ul>
-      <p v-else-if="searchTerm" class="mt-2">No results found.</p>
-      <p v-else class="mt-2">Type to search.</p>
+      <p v-else-if="searchTerm" class="mt-2 text-white text-2xl">No results found!</p>
+      <!-- <p v-else class="mt-2">Type to search.</p> -->
     </div>
   </div>
     </div>
@@ -132,7 +134,6 @@
 </template>
 
 <script>
-import preline from 'preline';
 import axios from 'axios';
 import { useUserStore } from '@/stores/user'
 
