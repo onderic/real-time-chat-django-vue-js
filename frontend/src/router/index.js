@@ -1,3 +1,5 @@
+import('preline')
+
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 
@@ -5,6 +7,8 @@ import SignupView from '../views/Registration/SignupView.vue'
 import LoginView from '../views/Registration/LoginView.vue'
 
 import { useUserStore } from '@/stores/user';
+
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

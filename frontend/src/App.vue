@@ -7,11 +7,23 @@
       <!-- Sidebar content -->
       <div  class="bg-gray-800 shadow-md  py-2 mt-0 px-4 flex items-center justify-between" style="position: sticky; top: 0;">
         <div class="flex items-center">
-          <img :src="userStore.user.user_avatar" 
+          <div class="hs-dropdown relative inline-flex">
+            <img id="hs-dropdown-default" :src="userStore.user.user_avatar" 
           @error="handleImageError"
           alt="" 
           class="mr-2 h-12 w-12 rounded-full border-2 border-green-400">
-          <span class="text-xl"></span>
+
+          <div class="hs-dropdown-menu transition-[opacity,margin] duration-[0.1ms] hs-dropdown-open:opacity-100 opacity-0 w-72 hidden z-10 mt-2 min-w-[15rem] bg-gray-800 shadow-md rounded-lg p-2 dark:bg-gray-800 dark:border dark:border-gray-700 dark:divide-gray-700" aria-labelledby="hs-dropdown-default">
+            <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-white hover:bg-white hover:text-gray-600 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300" href="#">
+              Profile
+            </a>
+            <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-white hover:bg-white hover:text-gray-600 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300" @click="logout">
+             logout
+            </a>
+          </div>
+        </div>
+         
+          
         </div>
         
         <div class="px-2  ml-2 rounded-md">
@@ -120,6 +132,7 @@
 </template>
 
 <script>
+import preline from 'preline';
 import axios from 'axios';
 import { useUserStore } from '@/stores/user'
 
