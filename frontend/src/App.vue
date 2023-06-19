@@ -7,7 +7,10 @@
       <!-- Sidebar content -->
       <div  class="bg-gray-800 shadow-md  py-2 mt-0 px-4 flex items-center justify-between" style="position: sticky; top: 0;">
         <div class="flex items-center">
-          <img :src="userStore.user.user_avatar" alt="" class="mr-2 h-12 w-12 rounded-full border-2 border-green-400">
+          <img :src="userStore.user.user_avatar" 
+          @error="handleImageError"
+          alt="" 
+          class="mr-2 h-12 w-12 rounded-full border-2 border-green-400">
           <span class="text-xl"></span>
         </div>
         
@@ -37,6 +40,7 @@
           >
             <img
               :src="item.user_user_avatar"
+              @error="handleImageError"
               alt=""
               class="mr-2 h-8 w-8 bg-gray-200  rounded-full"
             />
@@ -55,7 +59,10 @@
               <nav  class="bg-gray-800 text-white py-2 px-4 overflow-y-auto flex items-center justify-between fixed top-0 lg:left-1/4 lg:w-3/4 w-full border-b border-gray-300">
                 <!-- Navigation content -->
                 <div class="flex items-center">
-                <img :src="getUserImage(selectedUser)" alt="" class="h-12 w-12 rounded-full  border-r-2 border-gray-300 mr-2">
+                <img :src="getUserImage(selectedUser)" 
+                @error="handleImageError"
+                alt="" 
+                class="h-12 w-12 rounded-full  border-r-2 border-gray-300 mr-2">
                 <span v-if="selectedUser" class=" text-xl">{{ selectedUser }}</span>
               </div>
               <div class="ml-auto">
@@ -140,6 +147,10 @@ export default {
     this.fetchUsers();
   },
   methods: {
+    handleImageError(event){
+
+      event.target.src = "data:image/png;base64,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"
+    },
     selectUser(username) {
       this.selectedUser = username;
       const user = this.items.find(item => item.username === username);
