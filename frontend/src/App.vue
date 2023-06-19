@@ -66,8 +66,8 @@
 
 
             <div :class="{ 'bg-gray-500': selectedUser, 'bg-slate-800': !selectedUser }">
-          
-              <div v-if="chatItems.length > 0" class="px-4 mt-10 py-8 bg-gray-700  h-screen ">
+            <div class="h-screen  bg-gray-700 flex flex-col">
+            <div v-if="chatItems.length > 0" class="px-4 mt-10 py-8  h-screen  ">
             <div class="overflow-y-auto max-h-[630px]">
               <div v-for="(item, index) in chatItems" :key="index">
                 <div v-if="item.sender === userStore.user.username" class="bg-gray-100 ml-2 mb-4 border border-gray-200 rounded-md shadow-md px-4 py-2 w-1/2">
@@ -83,7 +83,9 @@
               </div>
               </div>
             </div>
-            <div v-if="selectedUser" class="bg-gray-800 p-4 w-full" style="position: sticky; bottom: 0;">
+          
+            <div v-else class="flex-grow"></div>
+            <div v-if="selectedUser" class="bg-gray-800 p-4 w-full " style="position: sticky; bottom: 0;">
               <div class="flex items-center rounded-md px-10">
                 <input v-model="message" @keydown.enter="sendMessage" type="text" class="w-1/2 rounded-md py-3  px-4" placeholder="Type here..." required>
                 <button @click="sendMessage" class="ml-3 focus:outline-none bg-white p-3 rounded-md">
@@ -92,6 +94,7 @@
               </div>
             </div>
           </div>
+            </div>
             </div>
             <div v-else class="bg-gray-700 h-screen flex justify-center  items-center">
             <div class="bg-white px-8 py-8 rounded-lg" >
