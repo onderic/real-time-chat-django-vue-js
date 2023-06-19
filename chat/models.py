@@ -9,6 +9,7 @@ class ChatRoom(models.Model):
 
 
 class ChatMessage(models.Model):
+    id = models.AutoField(primary_key=True)
     room = models.ForeignKey(ChatRoom, on_delete=models.CASCADE)
     sender = models.ForeignKey(User, on_delete=models.CASCADE)
     recipient = models.ForeignKey(User, on_delete=models.CASCADE, related_name='received_messages')
