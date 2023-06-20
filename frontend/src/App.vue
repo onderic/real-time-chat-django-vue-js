@@ -98,7 +98,7 @@
                     <span class="hs-dropdown  ml-6 cursor-pointer">
                       <i class=" fas fa-ellipsis-v"></i>
                       <div class="hs-dropdown-menu transition-[opacity,margin] duration-[0.1ms] hs-dropdown-open:opacity-100 opacity-0  hidden z-10 mt-2 min-w-[10rem] bg-white shadow-md rounded-lg p-2 dark:bg-gray-800 dark:border dark:border-gray-700 dark:divide-gray-700" aria-labelledby="hs-dropdown-default">
-                        <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray500 hover:bg-white hover:text-gray-600 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300" @click="logout">
+                        <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray500 hover:bg-white hover:text-gray-600 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300" @click="deleteMessage(item.id)">
                         Delete Message?
                         </a>
                       </div>
@@ -113,7 +113,7 @@
                     <span class="hs-dropdown  ml-6 cursor-pointer">
                       <i class=" fas fa-ellipsis-v"></i>
                       <div class="hs-dropdown-menu transition-[opacity,margin] duration-[0.1ms] hs-dropdown-open:opacity-100 opacity-0 w-12 hidden z-10 mt-2 min-w-[10rem] bg-white shadow-md rounded-lg p-2 dark:bg-gray-800 dark:border dark:border-gray-700 dark:divide-gray-700" aria-labelledby="hs-dropdown-default">
-                        <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray500 hover:bg-white hover:text-gray-600 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300" @click="deleteMessage">
+                        <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray500 hover:bg-white hover:text-gray-600 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300" @click="deleteMessage(item.id)">
                         Delete Message
                         </a>
                       </div>
@@ -310,22 +310,15 @@ export default {
         }
     },
     async deleteMessage(messageId) {
-        try {
-          const response = await axios.delete(`/chat/api/v1/delete-chat-message/${messageId}/`);
-          console.log('Delete response:', response);
-          this.chatItems = this.chatItems.filter(item => item.id !== messageId);
-        } catch (error) {
-          console.error('Error deleting chat message:', error);
-        }
+      try {
+        // console.log('Deleting message with ID:', messageId);
+        const response = await axios.delete(`/chat/api/v1/delete-chat-message/${messageId}/`);
+        console.log('Delete response:', response);
+        this.chatItems = this.chatItems.filter(item => item.id !== messageId);
+      } catch (error) {
+        console.error('Error deleting chat message:', error);
+      }
     },
-    scrollToBottom(){
-      this.$nextTick(() =>{
-        const container = this.$refs.chatContainer;
-        container.scrollTop = container.scrollHeight;
-      })
-    },
-
-
   },
   
   created() {
