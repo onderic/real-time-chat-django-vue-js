@@ -14,6 +14,8 @@ class ChatMessage(models.Model):
     sender = models.ForeignKey(User, on_delete=models.CASCADE)
     recipient = models.ForeignKey(User, on_delete=models.CASCADE, related_name='received_messages')
     message = models.TextField()
+    deletedBySender = models.BooleanField(default=False)
+    deletedByRecipient = models.BooleanField(default=False)
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
