@@ -311,7 +311,7 @@ export default {
     },
     async deleteMessage(messageId) {
       try {
-        // console.log('Deleting message with ID:', messageId);
+      
         const response = await axios.delete(`/chat/api/v1/delete-chat-message/${messageId}/`);
         console.log('Delete response:', response);
         this.chatItems = this.chatItems.filter(item => item.id !== messageId);
